@@ -72,8 +72,28 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  let result = false;
+  for (let i = 1; i < 8; i += 1) {
+    if (queen.x + i === king.x && queen.y + i === king.y) {
+      result = true;
+    } else if (queen.x - i === king.x && queen.y - i === king.y) {
+      result = true;
+    } else if (queen.x + i === king.x && queen.y - i === king.y) {
+      result = true;
+    } else if (queen.x - i === king.x && queen.y + i === king.y) {
+      result = true;
+    } else if (queen.x === king.x && queen.y + i === king.y) {
+      result = true;
+    } else if (queen.x === king.x && queen.y - i === king.y) {
+      result = true;
+    } else if (queen.x + i === king.x && queen.y === king.y) {
+      result = true;
+    } else if (queen.x - i === king.x && queen.y === king.y) {
+      result = true;
+    }
+  }
+  return result;
 }
 
 /**
@@ -125,56 +145,31 @@ function isIsoscelesTriangle(a, b, c) {
  *  26  => XXVI
  */
 function convertToRomanNumerals(num) {
-  const obj = {
-    1: 'I',
-    2: 'II',
-    3: 'III',
-    4: 'IV',
-    5: 'V',
-    6: 'VI',
-    7: 'VII',
-    8: 'VIII',
-    9: 'IX',
-    10: 'X',
-    11: 'XI',
-    12: 'XII',
-    13: 'XIII',
-    14: 'XIV',
-    15: 'XV',
-    16: 'XVI',
-    17: 'XVII',
-    18: 'XVIII',
-    20: 'XX',
-    21: 'XXI',
-    22: 'XXII',
-    23: 'XXIII',
-    24: 'XXIV',
-    25: 'XXV',
-    26: 'XXVI',
-    27: 'XXVII',
-    28: 'XXVIII',
-    29: 'XXIX',
-    30: 'XXX',
-    31: 'XXXI',
-    32: 'XXXII',
-    33: 'XXXIII',
-    34: 'XXXIV',
-    35: 'XXXV',
-    36: 'XXXVI',
-    37: 'XXXVII',
-    38: 'XXXVIII',
-    39: 'XXXVIV',
-  };
   let result = '';
-  const newNum = num.toString();
-  const newObj = Object.keys(obj);
-  const selectFunc = (key) => {
-    if (key === newNum) {
-      result = obj[key];
-    }
-    return result;
-  };
-  newObj.forEach(selectFunc);
+  if (num >= 30 && num < 40) {
+    result = `XXX${convertToRomanNumerals(num - 30)}`;
+  }
+  if (num >= 20 && num < 30) {
+    result = `XX${convertToRomanNumerals(num - 20)}`;
+  }
+  if (num >= 10 && num < 20) {
+    result = `X${convertToRomanNumerals(num - 10)}`;
+  }
+  if (num >= 9 && num < 10) {
+    result = `IX${convertToRomanNumerals(num - 9)}`;
+  }
+  if (num >= 5 && num < 9) {
+    result = `V${convertToRomanNumerals(num - 5)}`;
+  }
+  if (num >= 4 && num < 5) {
+    result = `IV${convertToRomanNumerals(num - 4)}`;
+  }
+  if (num >= 1 && num < 4) {
+    result = `I${convertToRomanNumerals(num - 1)}`;
+  }
+  if (num === 0) {
+    result = '';
+  }
   return result;
 }
 
@@ -326,8 +321,37 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let ind = -1;
+  let sumLeft = arr[0];
+  let sumRight = arr[arr.length - 1];
+  if (arr.length === 2 || arr.length <= 0) {
+    ind = -1;
+  }
+  if (arr.length % 2 !== 0 && arr.length !== 2 && arr.length > 0) {
+    for (let i = 0; i < Math.round(arr.length / 2); i += 1) {
+      if (sumLeft < sumRight) {
+        sumLeft += arr[i];
+      } else if (sumLeft > sumRight) {
+        sumRight += arr[arr.length - 2 - i];
+      }
+      if (sumLeft === sumRight) {
+        ind = i;
+      }
+    }
+  } else if (arr.length !== 2 && arr.length > 0) {
+    for (let i = 0; i <= Math.round(arr.length / 2); i += 1) {
+      if (sumLeft < sumRight) {
+        sumLeft += arr[i];
+      } else if (sumLeft > sumRight) {
+        sumRight += arr[arr.length - 2 - i];
+      }
+      if (sumLeft === sumRight) {
+        ind = i;
+      }
+    }
+  }
+  return ind;
 }
 
 /**
