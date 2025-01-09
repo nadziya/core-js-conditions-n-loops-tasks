@@ -189,37 +189,60 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const obj = {
-    0: 'zero',
-    1: 'one',
-    2: 'two',
-    3: 'three',
-    4: 'four',
-    5: 'five',
-    6: 'six',
-    7: 'seven',
-    8: 'eight',
-    9: 'nine',
-    '.': 'point',
-    '-': 'minus',
-    ',': 'point',
-  };
-  const newStr = numberStr.toString();
   let result = '';
-  let i = 0;
-  const special = (key) => {
-    if (key === newStr[i]) {
-      result += ` ${obj[key]}`;
+  let sumOfResult = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '1':
+        result = 'one';
+        break;
+      case '2':
+        result = 'two';
+        break;
+      case '3':
+        result = 'three';
+        break;
+      case '4':
+        result = 'four';
+        break;
+      case '5':
+        result = 'five';
+        break;
+      case '6':
+        result = 'six';
+        break;
+      case '7':
+        result = 'seven';
+        break;
+      case '8':
+        result = 'eight';
+        break;
+      case '9':
+        result = 'nine';
+        break;
+      case '0':
+        result = 'zero';
+        break;
+      case '.':
+        result = 'point';
+        break;
+      case ',':
+        result = 'point';
+        break;
+      case '-':
+        result = 'minus';
+        break;
+      default:
+        break;
     }
-    return result;
-  };
-  for (i = 0; i < newStr.length; i += 1) {
-    Object.keys(obj).forEach(special);
+    sumOfResult = `${sumOfResult}${result} `;
   }
-  result = result.trim();
-  return result;
+  let sumOfResult1 = '';
+  for (let j = 0; j < sumOfResult.length - 1; j += 1) {
+    sumOfResult1 = `${sumOfResult1}${sumOfResult[j]}`;
+  }
+  return sumOfResult1;
 }
-
 /**
  * Determines whether a string is a palindrome.
  * In this task, the use of methods of the String and Array classes is not allowed.
